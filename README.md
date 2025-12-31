@@ -1,7 +1,7 @@
-# DSPokemonPatcher
+# Gen4PokemonPatcher
 
-### DS Pokemon Patcher
-* A patcher to modify the Generation 4 Pokémon games to run in 60FPS and the Generation 4 and 5 games to have modified shiny odds
+### Gen 4 Pokemon Patcher
+* A patcher to modify the Generation 4 Pokémon games to run in 60FPS and to have modified shiny odds
 
 ### Setup to get this patcher working
 * Have one of the following ROMs
