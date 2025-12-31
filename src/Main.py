@@ -105,6 +105,14 @@ def patch_60fps(rom_path, offset):
 def patch_shiny_rate(rom_path, offset, value):
     with open(rom_path, "rb+") as f:
         f.seek(offset)
+        current = f.read(1)
+
+        if current[0] != 0x08:
+            raise ValueError(
+                f"Expected shiny rate byte 0x08 at {hex(offset)}, got {hex(current[0])}"
+            )
+
+        f.seek(offset)
         f.write(bytes([value]))
 
 def ask_backup(rom_path):
