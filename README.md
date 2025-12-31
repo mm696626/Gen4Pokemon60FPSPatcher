@@ -5,11 +5,11 @@
 
 ### Setup to get this patcher working
 * Have one of the following ROMs
-  * Pokémon Diamond (USA) (Rev 5)
-  * Pokémon Pearl (USA) (Rev 5)
-  * Pokémon Platinum (USA) (Rev 1)
-  * Pokémon HeartGold (USA)
-  * Pokémon SoulSilver (USA)
+  * Pokémon Diamond (USA) (Rev 5) (md5 of **02a1af2a677d101394b1d99164a8c249**)
+  * Pokémon Pearl (USA) (Rev 5) (md5 of **e5da92c8cfabedd0d037ff33a2f2b6ba**)
+  * Pokémon Platinum (USA) (Rev 1) (md5 of **ab828b0d13f09469a71460a34d0de51b**)
+  * Pokémon HeartGold (USA) (md5 of **258cea3a62ac0d6eb04b5a0fd764d788**)
+  * Pokémon SoulSilver (USA) (md5 of **8a6c8888bed9e1dce952f840351b73f2**)
 * Navigate to the game you'd like to patch and select the ROM
 * Please be patient when your ROM is being patched. It'll look like nothing is happening, but wait for the confirmation that it's done
 * Have fun playing the Gen 4 Pokémon games in 60FPS or with boosted shiny odds!
