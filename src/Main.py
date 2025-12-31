@@ -3,7 +3,7 @@ from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
 import os
 import shutil
-import math
+import hashlib
 
 CHECK_BYTES = b"\x25\x63"
 PATCH_BYTES = b"\x00\x00"
@@ -41,12 +41,32 @@ GAMES = {
     },
 }
 
+KNOWN_MD5 = {
+    "Diamond": "02a1af2a677d101394b1d99164a8c249",
+    "Pearl": "e5da92c8cfabedd0d037ff33a2f2b6ba",
+    "Platinum": "ab828b0d13f09469a71460a34d0de51b",
+    "HeartGold": "258cea3a62ac0d6eb04b5a0fd764d788",
+    "SoulSilver": "8a6c8888bed9e1dce952f840351b73f2",
+}
+
 def validate_rom(rom_path, expected_signature):
     try:
         with open(rom_path, "rb") as f:
             return f.read(len(expected_signature)) == expected_signature
     except Exception:
         return False
+
+def check_md5(rom_path, game_name):
+    md5_hash = hashlib.md5()
+    try:
+        with open(rom_path, "rb") as f:
+            for chunk in iter(lambda: f.read(4096), b""):
+                md5_hash.update(chunk)
+    except Exception:
+        return False
+
+    rom_md5 = md5_hash.hexdigest()
+    return rom_md5.lower() == KNOWN_MD5[game_name].lower()
 
 def patch_60fps(rom_path, offset):
     with open(rom_path, "rb+") as f:
@@ -102,6 +122,10 @@ def start_patch(game_name, do_fps, do_shiny, shiny_value):
 
     if not validate_rom(rom_path, game["signature"]):
         messagebox.showerror("Invalid ROM", f"Not Pokémon {game_name}")
+        return
+
+    if not check_md5(rom_path, game_name):
+        messagebox.showerror("MD5 Mismatch", "ROM does not match known MD5 hash!")
         return
 
     if not ask_backup(rom_path):
