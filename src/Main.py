@@ -175,7 +175,7 @@ def open_options(game_name):
     win.title(f"{game_name} Patch Options")
     win.resizable(False, False)
 
-    fps_var = tk.BooleanVar(value=True)
+    fps_var = tk.BooleanVar(value=False)
     shiny_var = tk.BooleanVar(value=False)
     shiny_value = tk.IntVar(value=8)
 
