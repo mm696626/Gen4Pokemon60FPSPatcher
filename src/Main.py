@@ -3,6 +3,7 @@ from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
 import os
 import shutil
+import math
 
 CHECK_BYTES = b"\x25\x63"
 PATCH_BYTES = b"\x00\x00"
@@ -111,11 +112,14 @@ def start_patch(game_name, do_fps, do_shiny, shiny_value):
 
         if do_fps:
             result = patch_60fps(rom_path, game["fps_offset"])
-            messages.append("60 FPS patch: " + ("already applied" if result == "already" else "patched"))
+            messages.append(
+                "60 FPS patch: " +
+                ("already applied" if result == "already" else "patched")
+            )
 
         if do_shiny:
             patch_shiny_rate(rom_path, game["shiny_offset"], shiny_value)
-            messages.append(f"Shiny rate set to {shiny_value}")
+            messages.append(f"Shiny rate value written: {shiny_value}")
 
         messagebox.showinfo("Success", "\n".join(messages))
 
@@ -129,16 +133,23 @@ def open_options(game_name):
 
     fps_var = tk.BooleanVar(value=True)
     shiny_var = tk.BooleanVar(value=False)
-
     shiny_value = tk.IntVar(value=8)
 
     def update_display(*_):
         val = shiny_value.get()
-        percent = (val / 65536) * 100
+        denom = 65536
+
+        if val == 0:
+            approx = "0"
+        else:
+            approx_den = round(denom / val)
+            approx = f"1/{approx_den}"
+
+        percent = (val / denom) * 100
+
         display_label.config(
             text=(
-                f"Value: {val}\n"
-                f"Chance: {val}/65536\n"
+                f"Approximate Shiny Odds: {approx}\n"
                 f"≈ {percent:.4f}%"
             )
         )
