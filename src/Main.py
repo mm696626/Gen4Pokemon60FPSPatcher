@@ -89,9 +89,6 @@ def patch_60fps(rom_path, offset):
         f.seek(offset)
         current = f.read(2)
 
-        if current == PATCH_BYTES:
-            return "already"
-
         if current != CHECK_BYTES:
             raise ValueError(
                 f"Expected 25 63 at {hex(offset)}, got {current.hex(' ')}"
@@ -163,17 +160,12 @@ def start_patch(game_name, do_fps, do_shiny, shiny_value):
         messages = []
 
         if do_fps:
-            result = patch_60fps(rom_path, game["fps_offset"])
-            messages.append(
-                "60 FPS patch: " +
-                ("already applied" if result == "already" else "patched")
-            )
+            patch_60fps(rom_path, game["fps_offset"])
 
         if do_shiny:
             patch_shiny_rate(rom_path, game["shiny_offset"], shiny_value)
-            messages.append(f"Shiny rate value written: {shiny_value}")
 
-        messagebox.showinfo("Success", "\n".join(messages))
+        messagebox.showinfo("Success!", f"Pokémon {game_name} ROM successfully patched!")
 
     except Exception as e:
         messagebox.showerror("Error", str(e))
